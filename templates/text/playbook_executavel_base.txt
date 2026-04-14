@@ -1,0 +1,159 @@
+PLAYBOOK EXECUTAVEL - {{PROJECT_OR_SYSTEM_NAME}}
+Data Geracao: {{GENERATION_DATE_TIME}}
+Validade: {{VALIDITY_WINDOW}}
+================================================================================
+
+--------------------------------------------------------------------------------
+SUMARIO EXECUTIVO
+--------------------------------------------------------------------------------
+SITUACAO ATUAL:
+- Operador/Time: {{OPERATOR_CONTEXT}}
+- Recursos disponiveis: {{AVAILABLE_RESOURCES}}
+- Gap principal: {{MAIN_GAP}}
+- Status de execucao: {{CURRENT_STATUS}}
+
+DATAS CRITICAS IMEDIATAS:
+- {{CRITICAL_DATE_1}}
+- {{CRITICAL_DATE_2}}
+- {{CRITICAL_DATE_3}}
+
+FOCO LASER:
+- Tese/Projeto principal: {{PRIMARY_BET}}
+- Motivo da prioridade: {{WHY_NOW}}
+- Critério de continuidade: {{GO_NO_GO_CRITERIA}}
+
+--------------------------------------------------------------------------------
+MAPA DO ECOSSISTEMA
+--------------------------------------------------------------------------------
+Ecossistema principal: {{ECOSYSTEM_NAME}}
+Projetos incluidos:
+- {{PROJECT_1}}
+- {{PROJECT_2}}
+- {{PROJECT_3}}
+- {{PROJECT_4}}
+
+Proposito unificado:
+{{UNIFIED_PURPOSE}}
+
+Meta anual:
+{{ANNUAL_TARGET}}
+
+--------------------------------------------------------------------------------
+REDUCAO DE ESCOPO E CONSOLIDACAO
+--------------------------------------------------------------------------------
+Projetos eliminados, fundidos ou pausados:
+- {{REMOVED_OR_MERGED_1}}
+- {{REMOVED_OR_MERGED_2}}
+- {{REMOVED_OR_MERGED_3}}
+
+Racional:
+{{CONSOLIDATION_RATIONALE}}
+
+--------------------------------------------------------------------------------
+PROJETO PRIORITARIO
+--------------------------------------------------------------------------------
+PROJETO: {{PRIMARY_PROJECT_NAME}} (P1)
+Nucleo:
+{{PRIMARY_PROJECT_CORE}}
+
+Publico:
+{{PRIMARY_PROJECT_AUDIENCE}}
+
+Oferta:
+{{PRIMARY_PROJECT_OFFER}}
+
+Recursos necessarios:
+- Tempo: {{PRIMARY_PROJECT_TIME}}
+- Dinheiro: {{PRIMARY_PROJECT_BUDGET}}
+- IA: {{PRIMARY_PROJECT_AI_ROLE}}
+- Dependencias: {{PRIMARY_PROJECT_DEPENDENCIES}}
+
+Riscos criticos:
+- {{PRIMARY_RISK_1}}
+- {{PRIMARY_RISK_2}}
+- {{PRIMARY_RISK_3}}
+
+Sinais de validacao:
+- {{VALIDATION_SIGNAL_1}}
+- {{VALIDATION_SIGNAL_2}}
+- {{VALIDATION_SIGNAL_3}}
+
+--------------------------------------------------------------------------------
+PLANO SEMANAL DE EXECUCAO
+--------------------------------------------------------------------------------
+=== {{DAY_1}} ===
+{{DAY_1_BLOCKS}}
+
+=== {{DAY_2}} ===
+{{DAY_2_BLOCKS}}
+
+=== {{DAY_3}} ===
+{{DAY_3_BLOCKS}}
+
+=== {{DAY_4}} ===
+{{DAY_4_BLOCKS}}
+
+=== {{DAY_5}} ===
+{{DAY_5_BLOCKS}}
+
+=== {{DAY_6}} ===
+{{DAY_6_BLOCKS}}
+
+=== {{DAY_7}} ===
+{{DAY_7_BLOCKS}}
+
+--------------------------------------------------------------------------------
+BACKLOG PRIORIZADO
+--------------------------------------------------------------------------------
+1. {{BACKLOG_ITEM_1}} | Esforco: {{E1}} | Impacto: {{I1}} | IA: {{AI1}}
+2. {{BACKLOG_ITEM_2}} | Esforco: {{E2}} | Impacto: {{I2}} | IA: {{AI2}}
+3. {{BACKLOG_ITEM_3}} | Esforco: {{E3}} | Impacto: {{I3}} | IA: {{AI3}}
+4. {{BACKLOG_ITEM_4}} | Esforco: {{E4}} | Impacto: {{I4}} | IA: {{AI4}}
+5. {{BACKLOG_ITEM_5}} | Esforco: {{E5}} | Impacto: {{I5}} | IA: {{AI5}}
+
+--------------------------------------------------------------------------------
+PROMPTS OPERACIONAIS DE APOIO
+--------------------------------------------------------------------------------
+1. {{PROMPT_USE_CASE_1}}
+"""
+{{PROMPT_1}}
+"""
+
+2. {{PROMPT_USE_CASE_2}}
+"""
+{{PROMPT_2}}
+"""
+
+3. {{PROMPT_USE_CASE_3}}
+"""
+{{PROMPT_3}}
+"""
+
+--------------------------------------------------------------------------------
+EVIDENCIAS, HIPOTESES E LACUNAS
+--------------------------------------------------------------------------------
+Fatos confirmados:
+- {{CONFIRMED_FACT_1}}
+- {{CONFIRMED_FACT_2}}
+- {{CONFIRMED_FACT_3}}
+
+Hipoteses em teste:
+- {{HYPOTHESIS_1}}
+- {{HYPOTHESIS_2}}
+- {{HYPOTHESIS_3}}
+
+Lacunas de informacao:
+- {{GAP_1}}
+- {{GAP_2}}
+- {{GAP_3}}
+
+--------------------------------------------------------------------------------
+CHECKLIST FINAL
+--------------------------------------------------------------------------------
+[ ] {{CHECK_1}}
+[ ] {{CHECK_2}}
+[ ] {{CHECK_3}}
+[ ] {{CHECK_4}}
+[ ] {{CHECK_5}}
+
+Versao: {{VERSION}} | Proxima revisao: {{NEXT_REVIEW_DATE}}

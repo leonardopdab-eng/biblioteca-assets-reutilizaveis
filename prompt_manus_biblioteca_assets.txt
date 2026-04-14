@@ -1,0 +1,41 @@
+MISSÃO
+Abrir o ZIP fornecido, inventariar todos os arquivos, compreender cada template e incorporar apenas os templates-base unicos na biblioteca interna de geracao de assets.
+
+OBJETIVO REAL
+Nao e apenas “guardar codigos”.
+E construir uma biblioteca reutilizavel, limpa, deduplicada e documentada para gerar entregaveis futuros com baixo retrabalho.
+
+O QUE FAZER
+1. Abrir o ZIP.
+2. Listar todos os arquivos e detectar duplicacoes por conteudo, nao apenas por nome.
+3. Classificar cada item em uma destas classes:
+   - visual_assets_html
+   - operational_playbooks_text
+   - reference_only
+4. Extrair o codigo reaproveitavel de cada template-base.
+5. Remover metadados pessoais, datas fixas, nomes proprios, handles, labels contextuais e qualquer informacao que impeça reutilizacao.
+6. Substituir esses elementos por placeholders claros no padrao `{{PLACEHOLDER_NAME}}`.
+7. Nao criar multiplas entradas para arquivos duplicados. Manter apenas uma entrada por template-base.
+8. Criar ou atualizar um README com:
+   - nome do template
+   - finalidade
+   - quando usar
+   - diferencas entre os templates
+   - quais placeholders devem ser trocados antes de reutilizar
+   - observacoes sobre limitacoes do layout
+9. Manter separado o que for HTML visual do que for playbook textual/operacional.
+10. Se algum arquivo nao for HTML de fato, nao force sua classificacao como HTML.
+
+CRITERIOS DE QUALIDADE
+- Deduplicacao por conteudo obrigatoria.
+- Nenhum nome proprio antigo deve permanecer sem justificativa.
+- Placeholders devem ser semanticamente claros.
+- O README deve comparar os templates entre si, nao apenas descreve-los isoladamente.
+- Nao resumir em excesso: preservar a estrutura util do template.
+- Nao inventar bibliotecas, frameworks ou dependencias que nao existam no codigo.
+
+FORMATO DE SAIDA ESPERADO
+1. Biblioteca atualizada com templates-base unicos.
+2. README atualizado explicando diferencas e usos.
+3. Manifesto/inventario dos arquivos processados, com grupos de duplicados.
+4. Versoes reutilizaveis dos templates com placeholders.

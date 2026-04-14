@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{DOCUMENT_TITLE}} - {{AUTHOR_NAME}}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* --- CONFIGURAÇÕES GERAIS --- */
+        :root {
+            --primary-navy: #0F1B33; /* Azul Consultoria Profundo */
+            --accent-blue: #005EB8;   /* Azul Destaque */
+            --alert-red: #D93954;     /* Vermelho para dados negativos */
+            --text-dark: #333333;
+            --text-light: #666666;
+            --bg-gray: #F4F5F7;
+            --white: #FFFFFF;
+        }
+
+        * {
+            box-sizing: border-box;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            margin: 0;
+            padding: 0;
+            background-color: #e0e0e0; /* Fundo do browser */
+            font-family: 'Inter', sans-serif;
+            color: var(--text-dark);
+            font-size: 11pt; /* Tamanho legível para impressão */
+            line-height: 1.5;
+        }
+
+        /* --- PÁGINA A4 --- */
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            padding: 20mm;
+            margin: 20mm auto;
+            background: white;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- TIPOGRAFIA --- */
+        h1 {
+            font-size: 24pt;
+            font-weight: 700;
+            color: var(--primary-navy);
+            margin-bottom: 5mm;
+            letter-spacing: -0.5px;
+            line-height: 1.1;
+        }
+
+        h2 {
+            font-size: 14pt;
+            font-weight: 600;
+            color: var(--accent-blue);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            border-bottom: 2px solid var(--bg-gray);
+            padding-bottom: 2mm;
+            margin-top: 10mm;
+            margin-bottom: 5mm;
+        }
+
+        h3 {
+            font-size: 12pt;
+            font-weight: 700;
+            margin-bottom: 2mm;
+            color: var(--primary-navy);
+        }
+
+        p {
+            margin-bottom: 3mm;
+            text-align: justify;
+        }
+
+        .highlight-text {
+            color: var(--accent-blue);
+            font-weight: 600;
+        }
+
+        /* --- COMPONENTES VISUAIS --- */
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            border-bottom: 1px solid var(--primary-navy);
+            padding-bottom: 5mm;
+            margin-bottom: 10mm;
+        }
+
+        .logo-text {
+            font-size: 10pt;
+            font-weight: 700;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        .report-date {
+            font-size: 9pt;
+            color: var(--text-light);
+        }
+
+        .footer {
+            position: absolute;
+            bottom: 15mm;
+            left: 20mm;
+            right: 20mm;
+            border-top: 1px solid #ddd;
+            padding-top: 3mm;
+            display: flex;
+            justify-content: space-between;
+            font-size: 8pt;
+            color: var(--text-light);
+        }
+
+        .section-box {
+            background-color: var(--bg-gray);
+            padding: 6mm;
+            border-left: 4px solid var(--accent-blue);
+            margin-bottom: 5mm;
+            break-inside: avoid;
+        }
+
+        .technique-box {
+            border: 1px solid #ddd;
+            padding: 5mm;
+            margin-top: 3mm;
+            margin-bottom: 5mm;
+            background-color: var(--white);
+            break-inside: avoid;
+        }
+
+        /* --- GRÁFICOS SVG --- */
+        .chart-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 5mm 0;
+            flex-direction: column;
+        }
+        
+        .chart-label {
+            font-size: 9pt;
+            color: var(--text-light);
+            margin-top: 2mm;
+            text-align: center;
+        }
+
+        /* --- LAYOUT GRID --- */
+        .col-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 10mm;
+            margin-bottom: 5mm;
+        }
+
+        .stat-large {
+            font-size: 42pt;
+            font-weight: 700;
+            color: var(--alert-red);
+            line-height: 1;
+        }
+        
+        .stat-subtitle {
+            font-size: 10pt;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-light);
+        }
+
+        /* --- IMPRESSÃO --- */
+        @media print {
+            body {
+                background-color: white;
+            }
+            .page {
+                margin: 0;
+                box-shadow: none;
+                width: 210mm;
+                height: 297mm;
+                page-break-after: always;
+            }
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- PÁGINA 1: Sumário Executivo & Princípio 1 -->
+    <div class="page">
+        <header class="header">
+            <div class="logo-text">{{AUTHOR_NAME}}<br><span style="font-weight:300">{{AUTHOR_SUBTITLE}}</span></div>
+            <div class="report-date">{{REPORT_LABEL}} • {{REPORT_YEAR}}</div>
+        </header>
+
+        <h1>{{MAIN_HEADLINE}}</h1>
+        <p style="font-size: 14pt; color: var(--text-light); margin-bottom: 10mm;">
+            {{EXECUTIVE_SUMMARY_SUBTITLE}}
+        </p>
+
+        <!-- Destaque Estatístico -->
+        <div class="col-2" style="align-items: center; background: var(--bg-gray); padding: 10mm; border-radius: 4px;">
+            <div>
+                <div class="stat-large">{{STAT_VALUE}}</div>
+                <div class="stat-subtitle">{{STAT_LABEL}}</div>
+                <p style="margin-top: 5mm; font-size: 10pt;">
+                    {{STAT_DESCRIPTION}}
+                </p>
+            </div>
+            <div class="chart-container">
+                <!-- SVG Gauge -->
+                <svg width="150" height="150" viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#ddd" stroke-width="10" />
+                    <circle cx="50" cy="50" r="40" fill="none" stroke="#D93954" stroke-width="10" 
+                            stroke-dasharray="{{STAT_DASHARRAY}}" stroke-dashoffset="0" transform="rotate(-90 50 50)" />
+                    <text x="50" y="55" text-anchor="middle" font-family="Inter" font-weight="bold" font-size="20" fill="#333">{{STAT_VALUE}}</text>
+                </svg>
+                <div class="chart-label">{{CHART_FOOTNOTE}}</div>
+            </div>
+        </div>
+
+        <!-- Princípio 1 -->
+        <h2>01. {{PRINCIPLE_1_TITLE}}</h2>
+        
+        <div class="col-2">
+            <div>
+                <h3>{{PRINCIPLE_1_SUBTITLE}}</h3>
+                <p>{{PRINCIPLE_1_DESCRIPTION}}</p>
+                <p><strong>A Solução:</strong> {{PRINCIPLE_1_SOLUTION}}</p>
+            </div>
+            <div style="text-align: center; padding-top: 5mm;">
+                <!-- SVG Icon -->
+                {{PRINCIPLE_1_SVG_ICON}}
+                <p class="chart-label">{{PRINCIPLE_1_ICON_LABEL}}</p>
+            </div>
+        </div>
+
+        <div class="section-box">
+            <h3>Técnica: {{TECHNIQUE_1_TITLE}}</h3>
+            <p>{{TECHNIQUE_1_INTRO}}</p>
+            <ul style="margin-top:0; padding-left: 5mm; font-size: 10pt;">
+                {{TECHNIQUE_1_LIST_ITEMS}}
+            </ul>
+            <p><strong>Por que funciona?</strong> {{TECHNIQUE_1_RATIONALE}}</p>
+        </div>
+
+        <footer class="footer">
+            <div>© {{COPYRIGHT_YEAR}} {{AUTHOR_NAME}}</div>
+            <div>Página 1 de {{TOTAL_PAGES}}</div>
+        </footer>
+    </div>
+
+    <!-- PÁGINA 2: Desenvolvimento -->
+    <div class="page">
+        <header class="header">
+            <div class="logo-text">{{AUTHOR_NAME}}</div>
+            <div class="report-date">{{PAGE_LABEL_2}}</div>
+        </header>
+
+        <h2>02. {{PRINCIPLE_2_TITLE}}</h2>
+
+        <div class="col-2">
+            <div>
+                <h3>{{PRINCIPLE_2_SUBTITLE}}</h3>
+                <p>{{PRINCIPLE_2_DESCRIPTION}}</p>
+                <p class="highlight-text">{{PRINCIPLE_2_HIGHLIGHT}}</p>
+                <p>{{PRINCIPLE_2_EXTRA_INFO}}</p>
+            </div>
+            <div class="chart-container">
+                 <!-- SVG Visual -->
+                 {{PRINCIPLE_2_SVG_VISUAL}}
+                 <div class="chart-label">{{PRINCIPLE_2_CHART_LABEL}}</div>
+            </div>
+        </div>
+
+        <div class="technique-box">
+            <h3>Técnica: {{TECHNIQUE_2_TITLE}}</h3>
+            <p>{{TECHNIQUE_2_DESCRIPTION}}</p>
+        </div>
+
+        <div class="section-box">
+            <h3>{{SECTION_3_TITLE}}</h3>
+            <p>{{SECTION_3_CONTENT}}</p>
+        </div>
+
+        <footer class="footer">
+            <div>© {{COPYRIGHT_YEAR}} {{AUTHOR_NAME}}</div>
+            <div>Página 2 de {{TOTAL_PAGES}}</div>
+        </footer>
+    </div>
+
+    <!-- PÁGINA 3: Conclusão & Próximos Passos -->
+    <div class="page">
+        <header class="header">
+            <div class="logo-text">{{AUTHOR_NAME}}</div>
+            <div class="report-date">{{PAGE_LABEL_3}}</div>
+        </header>
+
+        <h2>03. {{CONCLUSION_TITLE}}</h2>
+        <p>{{CONCLUSION_INTRO}}</p>
+
+        <div class="section-box" style="background-color: var(--primary-navy); color: white;">
+            <h3 style="color: white;">{{NEXT_STEPS_TITLE}}</h3>
+            <p>{{NEXT_STEPS_DESCRIPTION}}</p>
+            <ul style="color: white; padding-left: 5mm;">
+                {{NEXT_STEPS_LIST}}
+            </ul>
+        </div>
+
+        <div style="margin-top: auto; text-align: center; padding: 10mm; border: 1px dashed var(--accent-blue);">
+            <p style="font-weight: 700; color: var(--accent-blue); margin-bottom: 2mm;">{{FINAL_CTA_TITLE}}</p>
+            <p style="font-size: 10pt;">{{FINAL_CTA_DESCRIPTION}}</p>
+            <p style="font-family: monospace; font-size: 12pt; margin-top: 5mm;">{{SOCIAL_HANDLE}}</p>
+        </div>
+
+        <footer class="footer">
+            <div>© {{COPYRIGHT_YEAR}} {{AUTHOR_NAME}}</div>
+            <div>Página 3 de {{TOTAL_PAGES}}</div>
+        </footer>
+    </div>
+
+</body>
+</html>

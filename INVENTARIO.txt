@@ -1,0 +1,21 @@
+INVENTARIO DO ZIP
+=================
+
+Total de arquivos analisados: 12
+Total de templates unicos por conteudo: 4
+
+1. Tipo: html | Template-base: Relatório Estratégico de Produtividade - Leonardo Pimentel
+   Ocorrencias: 4
+   Arquivos: CODE 1.md, Code 2.md, Code 3.md, Code 5.md
+
+2. Tipo: html | Template-base: Caderno de Planejamento 2026 - João Vinícius
+   Ocorrencias: 6
+   Arquivos: Code 10.md, Code 11.md, Code 6.md, Code 7.md, Code 8.md, Code9.md
+
+3. Tipo: text | Template-base: sem-title-html
+   Ocorrencias: 1
+   Arquivos: Code 13.md
+
+4. Tipo: html | Template-base: Playbook de Lançamento - Superando TDAH
+   Ocorrencias: 1
+   Arquivos: Code 4.md

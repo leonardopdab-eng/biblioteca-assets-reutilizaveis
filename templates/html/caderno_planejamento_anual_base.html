@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{DOCUMENT_TITLE}} - {{CLIENT_SHORT_NAME}}</title>
+    <style>
+        /* =========================================================
+           DESIGN SYSTEM & VARIÁVEIS CSS (ACESSIBILIDADE COGNITIVA)
+           ========================================================= */
+        :root {
+            --bg-color: #FFFEF5; /* Off-white reduz estresse visual e Irlen/Dislexia */
+            --text-color: #2D2D2D; /* Contraste suave, evita preto puro */
+            --accent-color: #4A90D9; /* Azul calmante para marcadores de seção */
+            --secondary-accent: #E2E8F0; /* Fundo secundário para caixas */
+            --grid-line: #CBD5E1; /* Linhas de pauta para escrita */
+            --danger-color: #E06C75; /* Alertas e datas críticas */
+            --font-main: 'Arial', Helvetica, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-print-color-adjust: exact !important;
+            print-color-adjust: exact !important;
+        }
+
+        body {
+            font-family: var(--font-main);
+            color: var(--text-color);
+            background-color: #555; /* Cor de fundo apenas para visualização na tela */
+            font-size: 12pt;
+            line-height: 1.5;
+        }
+
+        /* =========================================================
+           PRINT DESIGN & PAGINAÇÃO
+           ========================================================= */
+        @page {
+            size: A4 portrait;
+            margin: 0; /* Margens controladas pelo contêiner .page para precisão */
+        }
+
+        .page {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: var(--bg-color);
+            margin: 0 auto 20px auto;
+            padding: 15mm;
+            position: relative;
+            page-break-after: always;
+            break-after: page;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            overflow: hidden;
+        }
+
+        @media print {
+            body { background: none; }
+            .page { margin: 0; box-shadow: none; border: none; }
+        }
+
+        /* =========================================================
+           ARQUITETURA DE INFORMAÇÃO & WAYFINDING
+           ========================================================= */
+        .section-marker {
+            position: absolute;
+            top: 15mm;
+            right: 15mm;
+            background-color: var(--accent-color);
+            color: white;
+            padding: 6px 20px;
+            font-weight: bold;
+            font-size: 10pt;
+            border-radius: 4px 0 0 4px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .page-number {
+            position: absolute;
+            bottom: 15mm;
+            right: 15mm;
+            font-weight: bold;
+            color: var(--accent-color);
+        }
+
+        h1 { font-size: 28pt; margin-bottom: 20px; color: var(--text-color); line-height: 1.1; }
+        h2 { font-size: 18pt; margin-bottom: 15px; border-bottom: 2px solid var(--accent-color); padding-bottom: 5px; color: var(--accent-color); }
+        h3 { font-size: 14pt; margin-bottom: 10px; font-weight: bold; color: var(--text-color); }
+        
+        ul { padding-left: 20px; margin-bottom: 15px; }
+        li { margin-bottom: 8px; }
+
+        /* =========================================================
+           SISTEMA DE GRID (12 COLUNAS)
+           ========================================================= */
+        .grid-12 {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 15px;
+            margin-bottom: 20px;
+        }
+        .col-3 { grid-column: span 3; }
+        .col-4 { grid-column: span 4; }
+        .col-6 { grid-column: span 6; }
+        .col-8 { grid-column: span 8; }
+        .col-9 { grid-column: span 9; }
+        .col-12 { grid-column: span 12; }
+
+        /* =========================================================
+           COMPONENTES VISUAIS EDUCACIONAIS
+           ========================================================= */
+        .box {
+            background-color: white;
+            border: 2px solid var(--secondary-accent);
+            border-radius: 8px;
+            padding: 15px;
+            height: 100%;
+        }
+
+        .box-title {
+            font-weight: bold;
+            text-transform: uppercase;
+            font-size: 10pt;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+            display: block;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 10px;
+        }
+        
+        .checkbox {
+            width: 16px;
+            height: 16px;
+            border: 2px solid var(--text-color);
+            border-radius: 3px;
+            margin-right: 10px;
+            margin-top: 2px;
+            flex-shrink: 0;
+        }
+
+        /* Pautas e Grids para escrita manual */
+        .lined-area {
+            background-image: linear-gradient(transparent 95%, var(--grid-line) 5%);
+            background-size: 100% 30px;
+            min-height: 150px;
+            width: 100%;
+            margin-top: 10px;
+        }
+
+        .dot-grid-area {
+            background-image: radial-gradient(var(--grid-line) 1px, transparent 1px);
+            background-size: 20px 20px;
+            min-height: 200px;
+            width: 100%;
+            border: 1px solid var(--secondary-accent);
+            border-radius: 8px;
+            margin-top: 10px;
+        }
+
+        .qr-placeholder {
+            border: 2px dashed var(--accent-color);
+            background-color: rgba(74, 144, 217, 0.05);
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            font-size: 9pt;
+            font-weight: bold;
+            color: var(--accent-color);
+            border-radius: 8px;
+        }
+
+        /* Tabelas */
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 15px;
+        }
+        th {
+            background-color: var(--secondary-accent);
+            padding: 10px;
+            text-align: left;
+            font-size: 10pt;
+            text-transform: uppercase;
+        }
+        td {
+            border-bottom: 1px solid var(--grid-line);
+            padding: 10px;
+            vertical-align: top;
+        }
+
+        /* Destaques Especiais */
+        .highlight-date { font-weight: bold; color: var(--danger-color); }
+        .tag { background: var(--secondary-accent); padding: 2px 8px; border-radius: 12px; font-size: 9pt; }
+        
+        /* Flashcards CSS */
+        .flashcard-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            grid-template-rows: repeat(4, 1fr);
+            gap: 15px;
+            height: 260mm; /* Preenche a página */
+        }
+        .flashcard {
+            border: 2px dashed var(--grid-line);
+            border-radius: 8px;
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ==========================================
+         PÁGINA 1: CAPA (Minimalista)
+         ========================================== -->
+    <div class="page" style="display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+        <h1 style="font-size: 40pt; border: none; margin-bottom: 10px;">{{PLANNING_YEAR}}</h1>
+        <h2 style="border: none; color: var(--text-color); font-weight: normal;">{{DOCUMENT_SUBTITLE}}</h2>
+        <div style="width: 50px; height: 5px; background-color: var(--accent-color); margin: 30px 0;"></div>
+        <p style="font-size: 16pt; font-weight: bold;">{{CLIENT_NAME}}</p>
+        <p style="margin-top: 10px;">{{COURSE_OR_ROLE}}</p>
+        <p>{{CITY_STATE}}</p>
+    </div>
+
+    <!-- ==========================================
+         PÁGINA 2: DASHBOARD & DADOS PESSOAIS
+         ========================================== -->
+    <div class="page">
+        <div class="section-marker">{{SECTION_1_LABEL}}</div>
+        <div class="page-number">02</div>
+        
+        <h2>{{DASHBOARD_TITLE}}</h2>
+        
+        <div class="grid-12">
+            <!-- Quadrante 1: Pessoal -->
+            <div class="col-6 box">
+                <span class="box-title">{{ID_BOX_TITLE}}</span>
+                <p><strong>Nome:</strong> {{CLIENT_NAME}}</p>
+                <p><strong>Curso/Contexto:</strong> {{COURSE_DETAILS}}</p>
+                <p><strong>Apoio/Suporte:</strong> {{SUPPORT_CONTEXT}}</p>
+                <div class="lined-area" style="min-height: 60px;"></div>
+            </div>
+
+            <!-- Quadrante 2: Links Rápidos -->
+            <div class="col-6 box">
+                <span class="box-title">{{LINKS_BOX_TITLE}}</span>
+                <div style="display: flex; gap: 10px; margin-top: 10px;">
+                    <div class="qr-placeholder" style="flex: 1;">{{QR_1_LABEL}}</div>
+                    <div class="qr-placeholder" style="flex: 1;">{{QR_2_LABEL}}</div>
+                </div>
+            </div>
+
+            <!-- Quadrante 3: Pilares do Ano -->
+            <div class="col-6 box">
+                <span class="box-title">{{Pillars_TITLE}} {{PLANNING_YEAR}}</span>
+                {{PILLARS_CHECKLIST}}
+            </div>
+
+            <!-- Quadrante 4: Metas de Longo Prazo -->
+            <div class="col-6 box">
+                <span class="box-title">{{RADAR_BOX_TITLE}}</span>
+                {{RADAR_CHECKLIST}}
+            </div>
+        </div>
+
+        <h3>{{PRIORITY_LIST_TITLE}}</h3>
+        <table style="margin-top: 10px;">
+            <thead>
+                <tr>
+                    <th width="40%">{{COL_1_LABEL}}</th>
+                    <th width="30%">{{COL_2_LABEL}}</th>
+                    <th>{{COL_3_LABEL}}</th>
+                </tr>
+            </thead>
+            <tbody>
+                {{PRIORITY_TABLE_ROWS}}
+            </tbody>
+        </table>
+    </div>
+
+    <!-- ==========================================
+         PÁGINA 3: PLANO DE AÇÃO / CALENDÁRIO
+         ========================================== -->
+    <div class="page">
+        <div class="section-marker">{{SECTION_2_LABEL}}</div>
+        <div class="page-number">03</div>
+
+        <h2>{{EXECUTION_PLAN_TITLE}}</h2>
+        <div class="grid-12">
+            <div class="col-12 box">
+                <span class="box-title">{{ACTION_GRID_TITLE}}</span>
+                <div class="dot-grid-area"></div>
+            </div>
+        </div>
+        
+        <div class="grid-12">
+            <div class="col-4 box">
+                <span class="box-title">{{GOAL_1_TITLE}}</span>
+                <p style="font-size: 10pt;">{{GOAL_1_DESC}}</p>
+                <div class="lined-area" style="min-height: 100px;"></div>
+            </div>
+            <div class="col-4 box">
+                <span class="box-title">{{GOAL_2_TITLE}}</span>
+                <p style="font-size: 10pt;">{{GOAL_2_DESC}}</p>
+                <div class="lined-area" style="min-height: 100px;"></div>
+            </div>
+            <div class="col-4 box">
+                <span class="box-title">{{GOAL_3_TITLE}}</span>
+                <p style="font-size: 10pt;">{{GOAL_3_DESC}}</p>
+                <div class="lined-area" style="min-height: 100px;"></div>
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>

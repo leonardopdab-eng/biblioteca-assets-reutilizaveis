@@ -1,0 +1,62 @@
+{# proposta_continuidade.md.j2 — Proposta de continuidade pós-caso
+   Variáveis:
+   - case_id, consultant_name, date, version, company_name
+   - scope_summary: string
+   - deliverables: list[string]
+   - investment: string
+   - timeline: string
+   - cta: string
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: proposta_continuidade
+trilha: cliente
+version: {{ version | default('1.0') }}
+---
+
+# Proposta de Continuidade — {{ company_name | default('Cliente') }}
+
+**Preparado por**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+
+---
+
+## Contexto
+
+Com base no diagnóstico realizado e no plano de ação desenvolvido para **{{ company_name | default('sua empresa') }}**, identificamos oportunidade de aprofundamento no acompanhamento da implementação.
+
+## Escopo proposto
+
+{{ scope_summary | default('Acompanhamento mensal da execução do plano de ação, com ajuste de curso e suporte ao decisor.') }}
+
+## Entregáveis
+
+{% if deliverables is defined and deliverables %}
+{% for deliverable in deliverables %}
+- {{ deliverable }}
+{% endfor %}
+{% else %}
+- Relatório mensal de acompanhamento
+- Sessão de revisão quinzenal (60min)
+- Suporte assíncrono para tomada de decisão
+- Ajuste do plano conforme aprendizados
+{% endif %}
+
+## Investimento
+
+**{{ investment | default('A combinar conforme escopo e duração') }}**
+
+## Prazo
+
+**{{ timeline | default('3 meses, renováveis') }}**
+
+## Próximo passo
+
+{{ cta | default('Agendar reunião de 30min para alinhar escopo e condições.') }}
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME*
+*Versão {{ version | default('1.0') }} — {{ date | default('2026-01-01') }}*
+
+> ⚠️ Este documento requer aprovação do consultor (Gate G5) antes da entrega ao cliente.

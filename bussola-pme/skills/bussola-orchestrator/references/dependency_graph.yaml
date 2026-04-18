@@ -1,0 +1,138 @@
+# Dependency graph — Bússola PME artifacts
+# Each artifact lists what it depends on and what gate is required
+
+artifacts:
+  intake_normalized:
+    depends_on: []
+    gate_required: null
+    produced_by: bussola-personalization
+
+  information_gaps:
+    depends_on: [intake_normalized]
+    gate_required: null
+    produced_by: bussola-personalization
+
+  intake_normalized_v2:
+    depends_on: [intake_normalized]
+    gate_required: G1
+    produced_by: bussola-diagnostic-engine
+
+  hypotheses_log:
+    depends_on: [intake_normalized_v2]
+    gate_required: null
+    produced_by: bussola-diagnostic-engine
+
+  problem_tree:
+    depends_on: [hypotheses_log]
+    gate_required: null
+    produced_by: bussola-diagnostic-engine
+
+  diagnostic_working:
+    depends_on: [problem_tree, hypotheses_log]
+    gate_required: null
+    produced_by: bussola-diagnostic-engine
+    trilha: interna_only
+
+  priority_score:
+    depends_on: [problem_tree]
+    gate_required: G2
+    produced_by: bussola-diagnostic-engine
+
+  decision_log:
+    depends_on: []
+    gate_required: null
+    produced_by: bussola-diagnostic-engine
+
+  plano_acao:
+    depends_on: [priority_score]
+    gate_required: G3
+    produced_by: bussola-diagnostic-engine
+
+  simulation_report:
+    depends_on: [priority_score]
+    gate_required: null
+    produced_by: bussola-simulation-lab
+    optional: true
+
+  diagnostico_executivo:
+    depends_on: [problem_tree, hypotheses_log]
+    gate_required: G5
+    human_review: true
+    produced_by: bussola-deliverable-forge
+
+  matriz_prioridades:
+    depends_on: [priority_score]
+    gate_required: null
+    produced_by: bussola-deliverable-forge
+
+  plano_acao_cliente:
+    depends_on: [plano_acao]
+    gate_required: null
+    produced_by: bussola-deliverable-forge
+
+  playbook_operacional:
+    depends_on: [plano_acao_cliente]
+    gate_required: null
+    produced_by: bussola-deliverable-forge
+
+  apresentacao_executiva:
+    depends_on: [diagnostico_executivo, plano_acao_cliente]
+    gate_required: G5
+    human_review: true
+    produced_by: bussola-deliverable-forge
+
+  resumo_executivo:
+    depends_on: [diagnostico_executivo, plano_acao_cliente]
+    gate_required: null
+    produced_by: bussola-deliverable-forge
+
+  relatorio_acompanhamento:
+    depends_on: [plano_acao_cliente]
+    gate_required: null
+    produced_by: bussola-deliverable-forge
+
+  proposta_continuidade:
+    depends_on: [relatorio_acompanhamento, diagnostico_executivo]
+    gate_required: G5
+    human_review: true
+    produced_by: bussola-deliverable-forge
+
+  manifest_yaml:
+    depends_on: []
+    gate_required: null
+    produced_by: bussola-orchestrator
+
+  qa_checklist:
+    depends_on: [all_artifacts]
+    gate_required: G4
+    produced_by: bussola-deliverable-forge
+
+  anonymization_log:
+    depends_on: []
+    gate_required: null
+    produced_by: bussola-case1-showroom
+
+  consultant_config_snapshot:
+    depends_on: [consultant_config]
+    gate_required: null
+    produced_by: bussola-orchestrator
+
+  intake_original:
+    depends_on: [intake_normalized]
+    gate_required: null
+    produced_by: bussola-orchestrator
+
+  release_notes:
+    depends_on: [version_history]
+    gate_required: null
+    produced_by: bussola-orchestrator
+
+  custom_agent_skill:
+    depends_on: [consultant_config_snapshot, diagnostico_executivo, plano_acao_cliente]
+    gate_required: null
+    produced_by: bussola-deliverable-forge
+
+hardcoded_manual_gates:
+  G2: "priority_score requires human review — NEVER configurable"
+  G5: "critical artifacts require human review — NEVER configurable"
+  G6: "external effects require explicit confirmation — NEVER configurable"

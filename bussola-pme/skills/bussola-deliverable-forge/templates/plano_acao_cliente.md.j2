@@ -1,0 +1,40 @@
+{# plano_acao_cliente.md.j2 — Plano de ação formatado para cliente
+   Variáveis:
+   - case_id, consultant_name, date, version, company_name
+   - actions: list[{id, acao, owner, deadline, kpi, status}]
+   - total_actions: int
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: plano_acao_cliente
+trilha: cliente
+version: {{ version | default('1.0') }}
+---
+
+# Plano de Ação — {{ company_name | default('Cliente') }}
+
+**Preparado por**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+
+---
+
+## Ações priorizadas
+
+| # | Ação | Responsável | Prazo | Indicador de sucesso |
+|---|------|-------------|-------|---------------------|
+{% if actions is defined and actions %}
+{% for action in actions %}
+| **{{ action.id | default(loop.index) }}** | {{ action.acao | default('Ação ' ~ loop.index) }} | {{ action.owner | default('—') }} | {{ action.deadline | default('—') }} | {{ action.kpi | default('—') }} |
+{% endfor %}
+{% else %}
+| 1 | *Ações a serem definidas após diagnóstico* | — | — | — |
+{% endif %}
+
+---
+
+**Total de ações**: {{ total_actions | default(0) }}
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME*
+*Versão {{ version | default('1.0') }} — {{ date | default('2026-01-01') }}*

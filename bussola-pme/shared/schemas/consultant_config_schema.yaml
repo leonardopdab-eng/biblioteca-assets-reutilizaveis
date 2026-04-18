@@ -1,0 +1,102 @@
+# Bússola PME — consultant_config schema
+# Validador: skills/bussola-personalization/scripts/config_schema_validator.py
+
+type: object
+required:
+  - consultant_id
+  - consultant_name
+  - operating_mode
+  - method_weights
+  - dependency_order
+  - source_whitelist
+  - deliverable_depth
+  - created_at
+  - updated_at
+
+properties:
+  consultant_id:
+    type: string
+    description: "Identificador único do consultor (kebab-case)"
+    pattern: "^[a-z0-9]+(-[a-z0-9]+)*$"
+
+  consultant_name:
+    type: string
+    minLength: 2
+
+  operating_mode:
+    type: string
+    enum: [guided, hands_off]
+    description: >
+      guided = gate sempre pede confirmação. hands_off = avança auto
+      quando condição satisfeita. G2, G5, G6 sempre manuais em ambos.
+
+  method_weights:
+    type: object
+    required: [normalization, diagnosis, prioritization, action_plan]
+    properties:
+      normalization:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+      diagnosis:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+      prioritization:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+      action_plan:
+        type: number
+        minimum: 0.0
+        maximum: 1.0
+    description: "Soma deve ser 1.0 (±0.01). Validador rejeita se divergir."
+    additionalProperties: false
+
+  dependency_order:
+    type: string
+    enum: [fixed, flexible]
+    description: "fixed = ordem de fases obrigatória; flexible = pode pular fases opcionais"
+
+  source_whitelist:
+    type: array
+    items:
+      type: string
+      enum: [google_drive, gmail, notion, none]
+    minItems: 1
+    description: "Fontes externas permitidas para pre-fill de intake"
+
+  deliverable_depth:
+    type: string
+    enum: [lite, standard, deep]
+    description: "lite = resumos, standard = padrão, deep = 5W2H expandido"
+
+  branding_tokens:
+    type: object
+    properties:
+      primary_color:
+        type: string
+        pattern: "^#[0-9A-Fa-f]{6}$"
+      font_family:
+        type: string
+      consultant_display_name:
+        type: string
+    additionalProperties: false
+
+  linear_workspace:
+    type: [string, "null"]
+    description: "Workspace ID do Linear para handoff de execução"
+
+  slack_channel:
+    type: [string, "null"]
+    description: "Canal Slack para notificações de handoff"
+
+  created_at:
+    type: string
+    format: date-time
+
+  updated_at:
+    type: string
+    format: date-time
+
+additionalProperties: false

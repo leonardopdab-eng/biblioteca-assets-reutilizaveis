@@ -1,0 +1,58 @@
+# Color Tokens — Bússola PME Showcase
+# Uso: importar em showcase_interactive.jsx e landing_copy templates
+
+brand:
+  primary: "#1B4F72"       # Azul Bússola — títulos, CTAs principais
+  secondary: "#2E86AB"     # Azul médio — linhas de gráfico, destaques
+  accent: "#F39C12"        # Âmbar — botões CTA, ícones de alerta
+  success: "#27AE60"       # Verde — métricas positivas, cenário otimista
+  danger: "#E74C3C"        # Vermelho — métricas de risco, cenário pessimista
+  neutral: "#7F8C8D"       # Cinza médio — subtextos, labels
+
+background:
+  page: "#FAFAFA"          # Fundo geral
+  card: "#FFFFFF"          # Fundo de cards
+  highlight: "#EBF5FB"     # Fundo de seções destacadas (azul muito claro)
+  dark: "#1C2833"          # Fundo escuro para hero sections
+
+text:
+  heading: "#1B4F72"       # Títulos H1/H2
+  body: "#2C3E50"          # Corpo de texto
+  muted: "#7F8C8D"         # Texto secundário / disclaimers
+  inverse: "#FFFFFF"       # Texto sobre fundo escuro
+
+chart:
+  pessimista: "#E74C3C"    # Linha cenário pessimista
+  realista: "#2E86AB"      # Linha cenário realista (base)
+  otimista: "#27AE60"      # Linha cenário otimista
+  grid: "#D5E8F0"          # Grid lines dos gráficos
+
+typography:
+  font_family: "Inter, system-ui, -apple-system, sans-serif"
+  font_heading: "Inter, sans-serif"
+  size_h1: "32px"
+  size_h2: "24px"
+  size_h3: "18px"
+  size_body: "16px"
+  size_small: "13px"
+  weight_regular: 400
+  weight_medium: 500
+  weight_bold: 700
+
+spacing:
+  xs: "4px"
+  sm: "8px"
+  md: "16px"
+  lg: "24px"
+  xl: "40px"
+  xxl: "64px"
+
+border:
+  radius_sm: "4px"
+  radius_md: "8px"
+  radius_lg: "16px"
+  color: "#D5E8F0"
+
+shadow:
+  card: "0 2px 8px rgba(27, 79, 114, 0.10)"
+  elevated: "0 4px 16px rgba(27, 79, 114, 0.16)"

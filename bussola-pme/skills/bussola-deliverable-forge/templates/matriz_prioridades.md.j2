@@ -1,0 +1,52 @@
+{# matriz_prioridades.md.j2 — Prioridades para o cliente
+   Variáveis:
+   - case_id, consultant_name, date, version
+   - company_name
+   - items: list[{rank, item, score, justification}]
+   - top3_narrative: list[{rank, item, narrative}]
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: matriz_prioridades
+trilha: cliente
+version: {{ version | default('1.0') }}
+---
+
+# Matriz de Prioridades — {{ company_name | default('Cliente') }}
+
+**Preparado por**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+
+---
+
+## Ranking de problemas
+
+| Prioridade | Problema | Score | Destaque |
+|------------|----------|-------|---------|
+{% if items is defined and items %}
+{% for item in items %}
+| **#{{ item.rank | default(loop.index) }}** | {{ item.item | default('Item ' ~ loop.index) }} | {{ item.score | default('—') }} | {{ item.highlight | default('—') }} |
+{% endfor %}
+{% else %}
+| #1 | *A ser preenchido* | — | — |
+{% endif %}
+
+---
+
+## Por que esta ordem?
+
+{% if top3_narrative is defined and top3_narrative %}
+{% for entry in top3_narrative %}
+### #{{ entry.rank | default(loop.index) }} — {{ entry.item | default('Item') }}
+
+{{ entry.narrative | default('Justificativa a ser preenchida.') }}
+
+{% endfor %}
+{% else %}
+*Justificativas a serem geradas após pontuação.*
+{% endif %}
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME*
+*Versão {{ version | default('1.0') }} — {{ date | default('2026-01-01') }}*

@@ -1,0 +1,62 @@
+{# Bússola PME — consultant_config.yaml template
+   Variáveis:
+   - consultant_id:        string (kebab-case)
+   - consultant_name:      string
+   - operating_mode:       "guided" | "hands_off"
+   - norm_weight:          float (0.0–1.0)
+   - diag_weight:          float (0.0–1.0)
+   - prio_weight:          float (0.0–1.0)
+   - plan_weight:          float (0.0–1.0)
+   - dependency_order:     "fixed" | "flexible"
+   - source_whitelist:     list[string]
+   - deliverable_depth:    "lite" | "standard" | "deep"
+   - primary_color:        string hex (optional)
+   - font_family:          string (optional)
+   - display_name:         string (optional)
+   - linear_workspace:     string | null (optional)
+   - slack_channel:        string | null (optional)
+   - created_at:           datetime string
+   - updated_at:           datetime string
+#}
+consultant_id: "{{ consultant_id | default('consultor-id') }}"
+consultant_name: "{{ consultant_name | default('Nome do Consultor') }}"
+
+operating_mode: {{ operating_mode | default('guided') }}
+
+method_weights:
+  normalization: {{ norm_weight | default(0.25) }}
+  diagnosis: {{ diag_weight | default(0.25) }}
+  prioritization: {{ prio_weight | default(0.25) }}
+  action_plan: {{ plan_weight | default(0.25) }}
+
+dependency_order: {{ dependency_order | default('fixed') }}
+
+source_whitelist:
+{% if source_whitelist is defined and source_whitelist %}
+{% for source in source_whitelist %}
+  - {{ source }}
+{% endfor %}
+{% else %}
+  - none
+{% endif %}
+
+deliverable_depth: {{ deliverable_depth | default('standard') }}
+
+{% if primary_color is defined or font_family is defined or display_name is defined %}
+branding_tokens:
+{% if primary_color is defined and primary_color %}
+  primary_color: "{{ primary_color }}"
+{% endif %}
+{% if font_family is defined and font_family %}
+  font_family: "{{ font_family }}"
+{% endif %}
+{% if display_name is defined and display_name %}
+  consultant_display_name: "{{ display_name }}"
+{% endif %}
+{% endif %}
+
+linear_workspace: {{ linear_workspace | default('null') }}
+slack_channel: {{ slack_channel | default('null') }}
+
+created_at: "{{ created_at | default('2026-01-01T00:00:00Z') }}"
+updated_at: "{{ updated_at | default('2026-01-01T00:00:00Z') }}"

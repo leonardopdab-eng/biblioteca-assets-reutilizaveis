@@ -1,0 +1,37 @@
+{# manifest.yaml.j2 — Template para novo caso Bússola PME
+   Variáveis:
+   - case_id:         string
+   - consultant_id:   string
+   - operating_mode:  "guided" | "hands_off"
+   - created_at:      datetime string
+   - updated_at:      datetime string
+#}
+case_id: "{{ case_id | default('CASE-XXX') }}"
+consultant_id: "{{ consultant_id | default('consultor-id') }}"
+created_at: "{{ created_at | default('2026-01-01T00:00:00Z') }}"
+updated_at: "{{ updated_at | default('2026-01-01T00:00:00Z') }}"
+current_phase: 0
+operating_mode: {{ operating_mode | default('guided') }}
+
+gates:
+{% for gate in ['G0', 'G1', 'G2', 'G3', 'G4', 'G5', 'G6'] %}
+  {{ gate }}:
+    status: not_reached
+{% endfor %}
+
+artifacts:
+{% for artifact in ['hypotheses_log', 'problem_tree', 'diagnostic_working', 'priority_score',
+                    'decision_log', 'information_gaps', 'assumptions_log', 'intake_normalized_v2',
+                    'diagnostico_executivo', 'apresentacao_executiva', 'proposta_continuidade',
+                    'plano_acao', 'plano_acao_cliente', 'manifest_yaml'] %}
+  {{ artifact }}:
+    status: not_started
+{% endfor %}
+
+human_review_required:
+  - diagnostico_executivo
+  - apresentacao_executiva
+  - proposta_continuidade
+
+simulation_used: false
+execution_confirmed: false

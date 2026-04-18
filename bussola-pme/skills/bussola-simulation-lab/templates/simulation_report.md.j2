@@ -1,0 +1,72 @@
+{# simulation_report.md.j2 — Relatório de simulação Bússola PME
+   Variáveis:
+   - case_id, consultant_name, date
+   - simulation_type: "pricing" | "funnel" | "capacity"
+   - hypotheses: list[string]
+   - scenarios: dict com pessimista/realista/otimista
+   - recommendation: string
+   - next_steps: list[string]
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: simulation_report
+type: {{ simulation_type | default('unknown') }}
+date: {{ date | default('2026-01-01') }}
+---
+
+# Relatório de Simulação — {{ simulation_type | default('Simulação') | title }}
+
+**Caso**: {{ case_id | default('CASE-XXX') }}
+**Consultor**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+
+---
+
+## Hipóteses utilizadas
+
+{% if hypotheses is defined and hypotheses %}
+{% for h in hypotheses %}
+- {{ h }} [HIPÓTESE]
+{% endfor %}
+{% else %}
+- *Hipóteses a serem documentadas*
+{% endif %}
+
+> ⚠️ Todas as premissas marcadas [HIPÓTESE] devem ser validadas com dados reais antes de decisão.
+
+---
+
+## Cenários
+
+### Pessimista
+{{ (scenarios or {}).get('pessimista', 'Dados a serem calculados') if scenarios is defined else 'Dados a serem calculados' }}
+
+### Realista (base)
+{{ (scenarios or {}).get('realista', 'Dados a serem calculados') if scenarios is defined else 'Dados a serem calculados' }}
+
+### Otimista
+{{ (scenarios or {}).get('otimista', 'Dados a serem calculados') if scenarios is defined else 'Dados a serem calculados' }}
+
+---
+
+## Recomendação consultiva
+
+{{ recommendation | default('Análise dos cenários a ser preenchida pelo consultor.') }}
+
+---
+
+## Próximos passos
+
+{% if next_steps is defined and next_steps %}
+{% for step in next_steps %}
+- {{ step }}
+{% endfor %}
+{% else %}
+- Validar premissas com dados reais do cliente
+- Incorporar insights na priorização (Fase 4)
+{% endif %}
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME Simulation Lab*
+*Este relatório é consultivo. Decisões finais permanecem com o consultor.*

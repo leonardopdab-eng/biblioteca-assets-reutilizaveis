@@ -1,0 +1,124 @@
+{# landing_copy.md.j2 — Copy de landing page para showcase Bússola PME
+   Variáveis:
+   - case_id: str (default: "CASE-ANON")
+   - segment: str (default: "Agência B2B de comunicação")
+   - team_size: str (default: "5–10 pessoas")
+   - problema_central: str
+   - achados_chave: list[str]
+   - top_acoes: list[str]
+   - resultado_esperado: str
+   - metrica_destaque: str (default: "~40–50% de melhoria")
+   - cta_link: str (default: "#agendar")
+   - consultant_name: str (default: "Consultor Bússola PME")
+#}
+---
+artifact: landing_page_copy
+case_id: {{ case_id | default('CASE-ANON') }}
+segment: {{ segment | default('Agência B2B') }}
+channel: landing_page
+---
+
+# Showcase: Como uma {{ segment | default('agência B2B') }} com {{ team_size | default('5–10 pessoas') }} recuperou o crescimento com método
+
+---
+
+## [HERO]
+
+**Headline**: Quando o pipeline cai, o instinto é trabalhar mais. O método é trabalhar diferente.
+
+**Subheadline**: Veja como uma {{ segment | default('agência B2B de comunicação') }} diagnosticou as causas reais e implementou ações priorizadas em 6 semanas.
+
+**CTA primário**: [Quero meu diagnóstico gratuito]({{ cta_link | default('#agendar') }})
+
+---
+
+## [SITUAÇÃO — O Problema]
+
+{{ problema_central | default('A empresa enfrentava queda consistente no pipeline de novos clientes e não conseguia identificar a causa raiz do problema.') }}
+
+Era o cenário clássico: esforço crescente, resultado estagnado.
+O problema não era falta de talento — era falta de clareza sobre onde agir primeiro.
+
+---
+
+## [DIAGNÓSTICO — O que descobrimos]
+
+Depois da fase de diagnóstico, três achados mudaram a conversa:
+
+{% if achados_chave is defined and achados_chave %}
+{% for achado in achados_chave %}
+**{{ loop.index }}.** {{ achado }}
+{% endfor %}
+{% else %}
+**1.** Processo de prospecção sem cadência definida — cada pessoa operava de forma diferente
+**2.** Proposta sendo enviada sem qualificação prévia — taxa de conversão em queda
+**3.** Tempo de resposta ao lead acima de 48h — perda de oportunidades quentes
+{% endif %}
+
+> ⚠️ Dados anonimizados e arredondados para ±5%. [CASO REAL — dados aproximados]
+
+---
+
+## [MÉTODO — Como funciona]
+
+O Bússola PME opera em 6 fases estruturadas:
+
+1. **Configuração** — Entender o contexto e calibrar o método para o seu segmento
+2. **Intake** — Coleta estruturada dos dados do negócio
+3. **Normalização** — Organização e validação dos dados
+4. **Diagnóstico** — Módulos analíticos (5 Porquês, Pareto, JTBD, Ishikawa)
+5. **Priorização** — Score Esforço × Impacto para as ações
+6. **Plano de Ação** — 5W2H com owner, prazo e KPI para cada iniciativa
+
+**Duração típica**: 4–8 semanas de acompanhamento consultivo
+
+---
+
+## [AÇÕES — O que foi implementado]
+
+As três ações de maior impacto priorizadas:
+
+{% if top_acoes is defined and top_acoes %}
+{% for acao in top_acoes %}
+- {{ acao }}
+{% endfor %}
+{% else %}
+- Criar cadência de prospecção semanal com script padronizado por ICP
+- Implementar qualificação BANT antes de qualquer envio de proposta
+- Reduzir SLA de resposta ao lead para < 4h com automação de alerta
+{% endif %}
+
+---
+
+## [RESULTADOS]
+
+{{ resultado_esperado | default('Após implementação, a empresa registrou melhoria significativa nos indicadores de pipeline.') }}
+
+**Resultado em destaque**: {{ metrica_destaque | default('~40–50% de melhoria no indicador principal') }}
+
+> ⚠️ Métricas arredondadas para faixa de ±5%. Resultados variam por contexto. [HIPÓTESE]
+
+---
+
+## [TESTEMUNHO]
+
+> "O processo nos deu clareza sobre o que priorizar. Paramos de 'apagar incêndios' e começamos a trabalhar de forma estruturada."
+>
+> — Fundador(a), {{ segment | default('Agência B2B') }} [depoimento anonimizado]
+
+---
+
+## [CTA FINAL]
+
+### Sua empresa também pode ter esse diagnóstico
+
+O Bússola PME é um método replicável, calibrado para o seu segmento e tamanho.
+
+**Próximo passo**: Uma sessão de diagnóstico de 60 minutos, sem compromisso.
+
+**[Agendar diagnóstico gratuito]({{ cta_link | default('#agendar') }})**
+
+---
+
+*{{ consultant_name | default('Consultor Bússola PME') }} — Método estruturado para PMEs*
+*Este showcase usa dados anonimizados. Resultados reais podem variar.*

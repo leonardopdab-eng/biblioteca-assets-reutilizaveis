@@ -1,0 +1,63 @@
+{# resumo_executivo.md.j2 — 1 página, trilha cliente
+   Variáveis:
+   - case_id, consultant_name, date, version
+   - company_name, segment
+   - primary_problem
+   - achados: list[string] (máximo 3)
+   - proximos_passos: list[{acao, owner, deadline}]
+   - branding: {primary_color}
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: resumo_executivo
+trilha: cliente
+version: {{ version | default('1.0') }}
+---
+
+# Resumo Executivo — {{ company_name | default('Cliente') }}
+
+**Preparado por**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+
+---
+
+## Situação atual
+
+**Empresa**: {{ company_name | default('Cliente') }} ({{ segment | default('segmento não informado') }})
+
+**Problema principal identificado**:
+
+> {{ primary_problem | default('Problema a ser definido após diagnóstico.') }}
+
+---
+
+## Principais achados
+
+{% if achados is defined and achados %}
+{% for achado in achados[:3] %}
+{{ loop.index }}. {{ achado }}
+{% endfor %}
+{% else %}
+1. *Achado a ser preenchido após diagnóstico*
+2. *Achado a ser preenchido após diagnóstico*
+3. *Achado a ser preenchido após diagnóstico*
+{% endif %}
+
+---
+
+## Próximos passos recomendados
+
+| Ação | Responsável | Prazo |
+|------|-------------|-------|
+{% if proximos_passos is defined and proximos_passos %}
+{% for passo in proximos_passos %}
+| {{ passo.acao | default('Ação') }} | {{ passo.owner | default('—') }} | {{ passo.deadline | default('—') }} |
+{% endfor %}
+{% else %}
+| *A ser definido no plano de ação* | — | — |
+{% endif %}
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME*
+*Versão {{ version | default('1.0') }} — {{ date | default('2026-01-01') }}*

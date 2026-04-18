@@ -1,0 +1,59 @@
+{# playbook_operacional.md.j2 — Guia de implementação para a equipe
+   Variáveis:
+   - case_id, consultant_name, date, version, company_name
+   - sections: list[{title, context, steps: list[string], kpi, owner, deadline}]
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: playbook_operacional
+trilha: cliente
+version: {{ version | default('1.0') }}
+---
+
+# Playbook Operacional — {{ company_name | default('Cliente') }}
+
+**Preparado por**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+
+> Este playbook descreve como executar as ações do plano. Siga os passos na ordem indicada.
+
+---
+
+{% if sections is defined and sections %}
+{% for section in sections %}
+## {{ loop.index }}. {{ section.title | default('Seção ' ~ loop.index) }}
+
+**Contexto**: {{ section.context | default('Contexto a ser preenchido.') }}
+
+**Responsável**: {{ section.owner | default('—') }} | **Prazo**: {{ section.deadline | default('—') }}
+
+**Indicador de sucesso**: {{ section.kpi | default('—') }}
+
+### Passos de execução
+
+{% if section.steps is defined and section.steps %}
+{% for step in section.steps %}
+{{ loop.index }}. {{ step }}
+{% endfor %}
+{% else %}
+1. *Passos a serem definidos*
+{% endif %}
+
+---
+{% endfor %}
+{% else %}
+## 1. [Seção a ser preenchida]
+
+*Este playbook será preenchido com base nas ações aprovadas no Gate G3.*
+
+---
+{% endif %}
+
+## Suporte
+
+Em caso de dúvidas na execução, contate: **{{ consultant_name | default('Consultor') }}**
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME*
+*Versão {{ version | default('1.0') }} — {{ date | default('2026-01-01') }}*

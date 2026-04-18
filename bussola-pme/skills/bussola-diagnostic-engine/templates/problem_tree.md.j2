@@ -1,0 +1,80 @@
+{# problem_tree.md.j2 — Árvore de problema para Bússola PME
+   Variáveis:
+   - case_id:          string
+   - consultant_name:  string
+   - date:             string
+   - module_used:      string
+   - root_problem:     string
+   - root_label:       string (FATO|INFERÊNCIA|HIPÓTESE)
+   - causes_l1:        list[{cause, label, evidence, sub_causes: [{cause, label}]}]
+   - hypothesis_count: int
+   - fact_count:       int
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+consultant: {{ consultant_name | default('Consultor') }}
+date: {{ date | default('2026-01-01') }}
+module_used: {{ module_used | default('5_whys') }}
+artifact: problem_tree
+trilha: interna
+---
+
+# Problem Tree — {{ case_id | default('CASE-XXX') }}
+
+**Consultor**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+**Módulo analítico**: `{{ module_used | default('5_whys') }}`
+
+---
+
+## Problema Raiz
+
+> **{{ root_problem | default('Problema não definido') }}** [{{ root_label | default('HIPÓTESE') }}]
+
+---
+
+## Causas Nível 1
+
+{% if causes_l1 is defined and causes_l1 %}
+{% for cause in causes_l1 %}
+### C{{ loop.index }}: {{ cause.cause | default('Causa ' ~ loop.index) }} [{{ cause.label | default('HIPÓTESE') }}]
+
+{% if cause.evidence is defined and cause.evidence %}
+*Evidência*: {{ cause.evidence }}
+{% endif %}
+
+{% if cause.sub_causes is defined and cause.sub_causes %}
+**Causas Nível 2:**
+{% for sub in cause.sub_causes %}
+- {{ sub.cause | default('Sub-causa') }} [{{ sub.label | default('HIPÓTESE') }}]
+{% endfor %}
+{% endif %}
+
+{% endfor %}
+{% else %}
+*Causas a serem identificadas durante o diagnóstico.*
+{% endif %}
+
+---
+
+## Resumo Epistêmico
+
+| Label | Quantidade |
+|-------|-----------|
+| [FATO] | {{ fact_count | default(0) }} |
+| [INFERÊNCIA] | {{ inference_count | default(0) }} |
+| [HIPÓTESE] | {{ hypothesis_count | default(0) }} |
+
+> Claims sem validação são tratados como [HIPÓTESE] por default.
+
+---
+
+## Status
+
+- [ ] Raiz identificada
+- [ ] Causas nível-1 completas (mínimo 3)
+- [ ] Causas nível-2 mapeadas
+- [ ] Labels epistêmicos aplicados em todos os nós
+- [ ] Pronto para Gate G2 (priorização)
+
+*[TRILHA INTERNA — não compartilhar com cliente]*

@@ -1,0 +1,29 @@
+consultant_id: "marina-costa"
+consultant_name: "Marina Costa"
+
+operating_mode: guided
+
+method_weights:
+  normalization: 0.20
+  diagnosis: 0.40
+  prioritization: 0.25
+  action_plan: 0.15
+
+dependency_order: fixed
+
+source_whitelist:
+  - google_drive
+  - gmail
+
+deliverable_depth: standard
+
+branding_tokens:
+  primary_color: "#1B4F72"
+  font_family: "Inter"
+  consultant_display_name: "Marina Costa Consultoria"
+
+linear_workspace: null
+slack_channel: null
+
+created_at: "2026-04-17T10:00:00Z"
+updated_at: "2026-04-17T10:00:00Z"

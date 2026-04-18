@@ -1,0 +1,69 @@
+{# diagnostico_executivo.md.j2 — Diagnóstico para o cliente
+   Variáveis:
+   - case_id, consultant_name, date, version
+   - company_name, segment
+   - module_used: string
+   - root_problem: string
+   - top_causes: list[{cause, summary}] (máximo 5)
+   - top_hypotheses: list[{claim, status}] (máximo 3, sem labels internos)
+   - methodology_note: string
+   - branding: {primary_color}
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+artifact: diagnostico_executivo
+trilha: cliente
+version: {{ version | default('1.0') }}
+---
+
+# Diagnóstico Executivo — {{ company_name | default('Cliente') }}
+
+**Preparado por**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+**Metodologia**: {{ module_used | default('Análise de causa raiz') }}
+
+---
+
+## Problema central diagnosticado
+
+> **{{ root_problem | default('Problema central a ser definido.') }}**
+
+---
+
+## Principais causas identificadas
+
+{% if top_causes is defined and top_causes %}
+{% for cause in top_causes %}
+### {{ loop.index }}. {{ cause.cause | default('Causa ' ~ loop.index) }}
+
+{{ cause.summary | default('Descrição a ser preenchida.') }}
+
+{% endfor %}
+{% else %}
+*Causas a serem identificadas durante o diagnóstico.*
+{% endif %}
+
+---
+
+## Achados e hipóteses de trabalho
+
+{% if top_hypotheses is defined and top_hypotheses %}
+{% for h in top_hypotheses %}
+- **{{ h.claim | default('Achado ' ~ loop.index) }}** — Status: {{ h.status | default('em investigação') }}
+{% endfor %}
+{% else %}
+*Achados a serem documentados após análise.*
+{% endif %}
+
+---
+
+## Sobre a metodologia aplicada
+
+{{ methodology_note | default('Utilizamos análise estruturada de causa raiz para mapear os problemas e suas origens.') }}
+
+---
+
+*{{ consultant_name | default('Consultor') }} — Bússola PME*
+*Versão {{ version | default('1.0') }} — {{ date | default('2026-01-01') }}*
+
+> ⚠️ Este documento requer aprovação do consultor (Gate G5) antes da entrega ao cliente.

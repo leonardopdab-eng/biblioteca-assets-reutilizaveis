@@ -1,0 +1,23 @@
+consultant_id: "joao-alves"
+consultant_name: "João Alves"
+
+operating_mode: hands_off
+
+method_weights:
+  normalization: 0.15
+  diagnosis: 0.35
+  prioritization: 0.20
+  action_plan: 0.30
+
+dependency_order: fixed
+
+source_whitelist:
+  - google_drive
+
+deliverable_depth: deep
+
+linear_workspace: null
+slack_channel: null
+
+created_at: "2026-04-17T10:00:00Z"
+updated_at: "2026-04-17T10:00:00Z"

@@ -1,0 +1,26 @@
+{# slack_handoff_message.md.j2 — Mensagem de handoff para Slack
+   Variáveis:
+   - case_id, consultant_name, project_name, project_url
+   - epics: list[{name, issue_count}]
+   - team_channel
+#}
+🚀 *Novo projeto Bússola PME criado no Linear*
+
+*Caso*: {{ case_id | default('BP-XXX') }}
+*Consultor*: {{ consultant_name | default('Consultor') }}
+*Projeto*: {{ project_name | default('Bússola PME — Execução') }}
+{% if project_url is defined and project_url %}*Link*: {{ project_url }}{% endif %}
+
+*Epics criados*:
+{% if epics is defined and epics %}
+{% for epic in epics %}
+• {{ epic.name | default('Epic') }} — {{ epic.issue_count | default(0) }} issues
+{% endfor %}
+{% else %}
+• (ver projeto no Linear)
+{% endif %}
+
+*Próximo passo*: Mover issues do `Backlog` para `In Progress` conforme execução.
+
+---
+_Gerado automaticamente pelo sistema Bússola PME_

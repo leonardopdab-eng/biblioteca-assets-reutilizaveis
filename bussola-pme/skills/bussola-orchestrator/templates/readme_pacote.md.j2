@@ -1,0 +1,68 @@
+{# readme_pacote.md.j2 — README do pacote final
+   Variáveis:
+   - case_id, consultant_name, date, version
+   - files_interno: list[string]
+   - files_cliente: list[string]
+   - files_governanca: list[string]
+#}
+# Pacote do Caso {{ case_id | default('CASE-XXX') }} — Bússola PME
+
+**Consultor**: {{ consultant_name | default('Consultor') }}
+**Data de geração**: {{ date | default('2026-01-01') }}
+**Versão**: {{ version | default('1.0') }}
+
+---
+
+## Trilha Interna (uso exclusivo do consultor)
+
+{% if files_interno is defined and files_interno %}
+{% for f in files_interno %}
+- `interno/{{ f }}`
+{% endfor %}
+{% else %}
+- `interno/` — ver diretório
+{% endif %}
+
+> ⚠️ Não compartilhar com cliente.
+
+---
+
+## Trilha Cliente (artefatos aprovados para entrega)
+
+{% if files_cliente is defined and files_cliente %}
+{% for f in files_cliente %}
+- `cliente/{{ f }}`
+{% endfor %}
+{% else %}
+- `cliente/` — ver diretório
+{% endif %}
+
+---
+
+## Trilha Governança (auditoria e controle)
+
+{% if files_governanca is defined and files_governanca %}
+{% for f in files_governanca %}
+- `governanca/{{ f }}`
+{% endfor %}
+{% else %}
+- `governanca/` — ver diretório
+{% endif %}
+
+---
+
+## Custom Agent
+
+- `custom_agent/SKILL.md` — Skill gerada para casos similares
+
+---
+
+## Instruções
+
+1. Compartilhar diretório `cliente/` com o cliente (ou enviar e-book HTML)
+2. Arquivar `interno/` e `governanca/` no sistema do consultor
+3. Usar `custom_agent/SKILL.md` para acelerar casos similares
+
+---
+
+*Gerado pelo sistema Bússola PME — bussola-orchestrator*

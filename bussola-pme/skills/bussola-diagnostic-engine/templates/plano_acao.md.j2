@@ -1,0 +1,76 @@
+{# plano_acao.md.j2 — Plano de ação para Bússola PME
+   Variáveis:
+   - case_id:        string
+   - consultant_name:string
+   - date:           string
+   - depth:          "lite" | "standard" | "deep"
+   - actions:        list[{id, acao, owner, deadline, kpi, status, hypothesis_propagated?, 5w2h?}]
+   - total_actions:  int
+   - propagated_count: int
+#}
+---
+case_id: {{ case_id | default('CASE-XXX') }}
+consultant: {{ consultant_name | default('Consultor') }}
+date: {{ date | default('2026-01-01') }}
+depth: {{ depth | default('standard') }}
+artifact: plano_acao
+trilha: interna_para_cliente
+status: pending_human_review
+---
+
+# Plano de Ação — {{ case_id | default('CASE-XXX') }}
+
+**Consultor**: {{ consultant_name | default('Consultor') }}
+**Data**: {{ date | default('2026-01-01') }}
+**Profundidade**: `{{ depth | default('standard') }}`
+
+> Status: **pending_human_review** — requer Gate G3 antes de liberar para cliente.
+
+---
+
+## Ações
+
+| # | Ação | Owner | Deadline | KPI | Status |
+|---|------|-------|----------|-----|--------|
+{% if actions is defined and actions %}
+{% for action in actions %}
+| {{ action.id | default(loop.index) }} | {{ action.acao | default('Ação ' ~ loop.index) }} | {{ action.owner | default('—') }} | {{ action.deadline | default('—') }} | {{ action.kpi | default('—') }} | {{ action.status | default('pending') }} |
+{% endfor %}
+{% else %}
+| — | *Ações a serem definidas após Gate G2* | — | — | — | — |
+{% endif %}
+
+{% if depth == 'deep' and actions is defined and actions %}
+---
+
+## Detalhamento 5W2H
+
+{% for action in actions %}
+{% if action['5w2h'] is defined %}
+### Ação {{ action.id | default(loop.index) }}: {{ action.acao | default('Ação') }}
+
+| Campo | Conteúdo |
+|-------|----------|
+| **What** | {{ action['5w2h'].what | default('—') }} |
+| **Why** | {{ action['5w2h'].why | default('—') }} |
+| **Where** | {{ action['5w2h'].where | default('—') }} |
+| **When** | {{ action['5w2h'].when | default(action.deadline | default('—')) }} |
+| **Who** | {{ action['5w2h'].who | default(action.owner | default('—')) }} |
+| **How** | {{ action['5w2h'].how | default('—') }} |
+| **How Much** | {{ action['5w2h'].how_much | default('—') }} |
+
+{% endif %}
+{% endfor %}
+{% endif %}
+
+---
+
+## Rodapé
+
+- **Total de ações**: {{ total_actions | default(0) }}
+- **Ações com hipóteses propagadas**: {{ propagated_count | default(0) }}
+{% if propagated_count is defined and propagated_count > 0 %}
+  > ⚠️ Ações com `hypothesis_propagated: true` requerem validação antes da execução.
+{% endif %}
+
+*[TRILHA INTERNA → CLIENTE após Gate G3 e G5]*

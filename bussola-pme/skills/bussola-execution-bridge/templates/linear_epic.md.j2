@@ -1,0 +1,39 @@
+{# linear_epic.md.j2 — Template de epic para criação no Linear
+   Variáveis:
+   - epic_name, owner, case_id
+   - context: string (contexto do problema)
+   - actions: list[string]
+   - kpi_summary: string
+   - depends_on: list[string]
+#}
+# {{ epic_name | default('[Bússola PME] Iniciativas') }}
+
+## Contexto do problema
+
+{{ context | default('Epic de execução gerado pelo sistema Bússola PME.') }}
+
+## Ações incluídas
+
+{% if actions is defined and actions %}
+{% for action in actions %}
+- {{ action }}
+{% endfor %}
+{% else %}
+- *Ações a serem definidas*
+{% endif %}
+
+## KPI do epic
+
+{{ kpi_summary | default('Ver issues individuais para KPIs específicos.') }}
+
+{% if depends_on is defined and depends_on %}
+## Dependências
+
+{% for dep in depends_on %}
+- Depende de: {{ dep }}
+{% endfor %}
+{% endif %}
+
+---
+*Case: {{ case_id | default('BP-XXX') }} | Owner: {{ owner | default('—') }}*
+*Gerado por Bússola PME — bussola-execution-bridge*

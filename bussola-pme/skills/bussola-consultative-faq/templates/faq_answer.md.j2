@@ -1,0 +1,34 @@
+{# faq_answer.md.j2 — Template de resposta FAQ Bússola PME
+   Variáveis:
+   - question:         string (pergunta original)
+   - answer:           string (resposta direta)
+   - reference:        string (arquivo de referência)
+   - example:          string (opcional — exemplo com BP-001)
+   - next_steps:       list[string] (opcional)
+   - escalate:         bool (se True, mostrar mensagem de escalação)
+   - escalation_msg:   string (se escalate=True)
+#}
+**Pergunta**: {{ question | default('Pergunta não especificada') }}
+
+---
+
+**Resposta**: {{ answer | default('Resposta não disponível.') }}
+
+**Referência**: `{{ reference | default('method_faq.md') }}`
+
+{% if example is defined and example %}
+**Exemplo (BP-001)**: {{ example }}
+
+{% endif %}
+{% if next_steps is defined and next_steps %}
+**Próximos passos sugeridos**:
+{% for step in next_steps %}
+- {{ step }}
+{% endfor %}
+
+{% endif %}
+{% if escalate is defined and escalate %}
+---
+
+⚠️ **Esta pergunta requer escalação**: {{ escalation_msg | default('Consulte o fundador ou suporte.') }}
+{% endif %}

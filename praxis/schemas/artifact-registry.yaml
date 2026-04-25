@@ -1,0 +1,162 @@
+# schemas/artifact-registry.yaml — All 17 artifact types in the praxis pipeline
+# Used by validate_qa.py and compile_master.py for artifact resolution
+
+artifacts:
+  A-01:
+    name: "Normalized Follow Up"
+    producer: phase-01
+    consumers: [phase-02, phase-03]
+    trilha: INTERNA
+    format: markdown
+    required: true
+    minimum_fields: [company_name, segment, primary_problem, urgency_level, decision_makers, team_size, annual_revenue_range]
+    epistemic_required: true
+
+  A-02:
+    name: "Proposta Comercial"
+    producer: phase-02
+    consumers: [consultant-delivery]
+    trilha: CLIENTE
+    format: markdown
+    required_if: "G-I2 in [a, d]"
+    template: "assets/proposta-comercial-template.md"
+    branding_required: true
+
+  A-03:
+    name: "Contrato de Fechamento + Showroom Case"
+    producer: phase-02
+    consumers: [consultant-delivery]
+    trilha: CLIENTE
+    format: markdown
+    required_if: "G-I2 in [b, d]"
+    template: "assets/contrato-fechamento-template.md"
+    branding_required: true
+
+  A-04:
+    name: "Client Personalization Pack"
+    producer: phase-02
+    consumers: [consultant-delivery]
+    trilha: CLIENTE
+    format: markdown
+    required_if: "G-I2 in [c, d]"
+    branding_required: true
+
+  A-05:
+    name: "Normalized Data (SVG + summary)"
+    producer: phase-03
+    consumers: [phase-03-internal]
+    trilha: INTERNA
+    format: markdown
+    required: true
+    epistemic_required: true
+
+  A-06:
+    name: "B-Frames Output"
+    producer: phase-03
+    consumers: [phase-04, phase-05]
+    trilha: INTERNA
+    format: markdown
+    required: true
+
+  A-07:
+    name: "Basic-Tier Analysis"
+    producer: phase-03
+    consumers: [phase-04, phase-05]
+    trilha: INTERNA
+    format: markdown
+    required_if: "G-I4 == Básico"
+    min_pages: 1
+    max_pages: 2
+
+  A-08:
+    name: "Lean-Tier Analysis"
+    producer: phase-03
+    consumers: [phase-04, phase-05]
+    trilha: INTERNA
+    format: markdown
+    required_if: "G-I4 == Lean"
+    min_pages: 3
+    max_pages: 5
+
+  A-09:
+    name: "Full-Tier Analysis"
+    producer: phase-03
+    consumers: [phase-04, phase-05]
+    trilha: INTERNA
+    format: markdown
+    required_if: "G-I4 == Full"
+    min_pages: 8
+    max_pages: 15
+
+  A-10:
+    name: "Simulation Phase 1"
+    producer: phase-04
+    consumers: [phase-05]
+    trilha: INTERNA
+    format: markdown
+    required_if: "phase-04 executed"
+    all_assumptions_labeled: true
+
+  A-11:
+    name: "Simulation Phase 2 (Extended)"
+    producer: phase-04
+    consumers: [phase-05]
+    trilha: INTERNA
+    format: markdown
+    required_if: "consultant requested extended depth"
+    all_assumptions_labeled: true
+
+  A-12:
+    name: "Architect Pack"
+    producer: phase-05
+    consumers: [phase-06]
+    trilha: AMBAS
+    format: zip
+    required: true
+
+  A-13:
+    name: "Final Compilation Input (manifest of artifacts)"
+    producer: phase-05
+    consumers: [phase-05-subroutine]
+    trilha: INTERNA
+    format: yaml
+    description: "Structured list of all artifacts for Agente 00 subroutine"
+
+  A-MASTER:
+    name: "Master Document (.md)"
+    producer: phase-05-subroutine
+    consumers: [phase-06]
+    trilha: AMBAS
+    format: markdown
+    required: true
+    filename_pattern: "master_${case_id}.md"
+    companion: "compilation_log.md"
+
+  A-MASTER-LINEAR:
+    name: "Master Document (Linear/PM format)"
+    producer: phase-05
+    consumers: [linear-mcp-optional]
+    trilha: INTERNA
+    format: markdown
+    required: false
+
+  A-FINAL:
+    name: "Final Designed Deliverable"
+    producer: phase-06
+    consumers: [consultant-to-client]
+    trilha: CLIENTE
+    format: markdown
+    required: true
+    template: "assets/diagnostico-executivo-template.md"
+    branding_required: true
+    client_track_only: true
+
+  A-OPS:
+    name: "Executive Spreadsheet"
+    producer: phase-06
+    consumers: [consultant-to-client]
+    trilha: CLIENTE
+    format: xlsx
+    required: true
+    tabs: [Resumo Executivo, Diagnóstico, Plano de Ação, Simulação, Próximos Passos]
+    branding_required: true

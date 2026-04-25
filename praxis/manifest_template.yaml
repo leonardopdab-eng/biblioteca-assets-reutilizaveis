@@ -1,0 +1,47 @@
+# manifest_template.yaml — Copy this to your case working directory as manifest.yaml
+# Or run: python scripts/init_case.py --consultant <id> --client <name>
+
+case_id: "praxis-YYYYMMDD-xxxxxxxx"      # auto-generated
+consultant_id: "seu-id-aqui"              # kebab-case
+client_identity:
+  company_name: ""
+  segment: ""
+  team_size: ""
+  annual_revenue_range: ""
+  decision_makers: []
+  branding:
+    logo_path: null
+    primary_color: null                   # override --color-primary
+    accent_color: null                    # override --color-accent
+    consultant_display_name: ""
+    consultant_company: ""
+    font_family: "Inter"
+  drive_references: []
+
+current_phase: 1
+scenario_selected: null                   # set at end of Phase 1
+
+phase_history: []
+# Example entry:
+# - phase: 1
+#   completed_at: "2026-04-18T10:00:00Z"
+#   gate_passed: "G0"
+
+artifacts_produced: []
+# Example entry:
+# - artifact_id: "A-01"
+#   name: "Normalized Follow Up"
+#   path: "artifacts/A-01-normalized-followup.md"
+#   produced_at: "2026-04-18T10:05:00Z"
+#   phase: 1
+#   sha256: null
+#   trilha: "INTERNA"
+
+gates_passed: []
+gates_pending: [G0, G1, G2, G3, G4, G5, G6]
+hardcoded_human_gates: [G2, G5, G6]
+
+created_at: "YYYY-MM-DDTHH:MM:SSZ"
+updated_at: "YYYY-MM-DDTHH:MM:SSZ"
+briefing_path: null
+case_id_previous: null                    # for Scenario B (review)

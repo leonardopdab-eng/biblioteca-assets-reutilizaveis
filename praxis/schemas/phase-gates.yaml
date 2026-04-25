@@ -1,0 +1,112 @@
+# schemas/phase-gates.yaml — Gate State Machine
+# Defines all gates G0–G6, their types, conditions, and advancement rules.
+
+hardcoded_human_gates: [G2, G5, G6]
+# WARNING: G2, G5, G6 are HARDCODED HUMAN REVIEW gates.
+# They MUST NEVER be auto-advanced under any condition.
+# Auto-advance logic in advance_phase.py will refuse to process them without
+# explicit 'yes' confirmation at the interactive prompt.
+
+gates:
+  G0:
+    name: "Intake Completeness Check"
+    phase: 1
+    type: AUTO
+    trigger: "End of Phase 1"
+    condition: |
+      All 7 mandatory fields present in A-01 OR each missing field has:
+        - impact: high|medium|low
+        - recommended_action: string
+        - gap_documented: true
+    mandatory_fields: [company_name, segment, team_size, annual_revenue_range, primary_problem, urgency_level, decision_makers]
+    on_pass: "Advance to Phase 2, update manifest"
+    on_fail: "Surface missing fields to consultant, request completion or explicit gap documentation"
+    next_phase: 2
+
+  G1:
+    name: "Normalization Quality Check"
+    phase: 3
+    type: AUTO
+    trigger: "Start of Phase 3"
+    condition: |
+      A-01 contains epistemic labels on all extracted claims.
+      No claim is present without one of: [FATO], [INFERÊNCIA], [HIPÓTESE].
+      All mandatory fields resolved.
+    on_pass: "Begin Phase 3 analytical work"
+    on_fail: "Return to Phase 1 normalization. Surface unlabeled claims."
+    next_phase: 3
+
+  G2:
+    name: "Diagnostic Human Review"
+    phase: 3
+    type: HARDCODED_HUMAN
+    trigger: "End of Phase 3"
+    condition: |
+      NEVER AUTO-ADVANCE.
+      Consultant must explicitly type approval or request revision.
+      Present: diagnostic summary, root causes, priority ranking, epistemic trail.
+      Accept only explicit: "aprovado", "aprovar", "approve", or a specific revision request.
+    on_pass: "Advance to Phase 4. Record approver + timestamp in manifest."
+    on_fail: "Return to Phase 3 for revision. Log revision request."
+    on_auto_attempt: "BLOCK. Surface error: 'Gate G2 exige revisão humana explícita. Auto-avanço bloqueado.'"
+    next_phase: 4
+
+  G3:
+    name: "Priority Score Completeness"
+    phase: 4
+    type: AUTO
+    trigger: "End of Phase 4"
+    condition: |
+      At least A-10 produced.
+      All simulation assumptions labeled [HIPÓTESE].
+      Consultant has confirmed simulation scope (explicit acknowledgment).
+    on_pass: "Advance to Phase 5"
+    on_fail: "Surface incomplete simulation elements"
+    next_phase: 5
+
+  G4:
+    name: "QA Checklist (Programmatic)"
+    phase: 6
+    type: AUTO
+    trigger: "Pre-release in Phase 6"
+    condition: "scripts/validate_qa.py exits with code 0"
+    on_pass: "Present full deliverable set to consultant for G5 review"
+    on_fail: "List failed checks, request revision, re-run"
+    next_phase: 6
+
+  G5:
+    name: "Final Package Human Approval"
+    phase: 6
+    type: HARDCODED_HUMAN
+    trigger: "After G4 passes"
+    condition: |
+      NEVER AUTO-ADVANCE.
+      Consultant reviews complete deliverable set (A-FINAL + A-OPS).
+      Accept only explicit approval.
+      Consultant may request revisions — return to Phase 6 generation.
+    on_pass: "Package delivered. Offer G6 execution handoff."
+    on_fail: "Return to Phase 6 for revision"
+    on_auto_attempt: "BLOCK. Surface error: 'Gate G5 exige aprovação humana explícita do pacote final.'"
+    next_phase: 6
+
+  G6:
+    name: "Execution Handoff Confirmation"
+    phase: 6
+    type: HARDCODED_HUMAN
+    trigger: "After G5 passes, if execution handoff requested"
+    condition: |
+      NEVER AUTO-ADVANCE.
+      Confirm or explicitly skip.
+      If confirmed: validate Linear/Slack export readiness before proceeding.
+      If skipped: record explicit skip in manifest.
+    on_pass: "Execute handoff (Linear export, Slack notification, ZIP delivery)"
+    on_skip: "Record skip. Case closed."
+    on_auto_attempt: "BLOCK. Surface error: 'Gate G6 exige confirmação explícita de handoff.'"
+    next_phase: null
+
+gate_advancement_rules:
+  - "Gates must be passed in phase order. Cannot advance G3 before G2."
+  - "G2, G5, G6 require interactive confirmation even in scripted runs."
+  - "A gate marked HARDCODED_HUMAN cannot be overridden by any config flag."
+  - "All gate approvals are timestamped and logged in manifest.gates_passed[]."
+  - "Failed gate attempts are logged to manifest.gate_failures[] for audit."

@@ -1,0 +1,101 @@
+# schemas/manifest.yaml — Praxis Case State Schema
+# Every active case has one manifest.yaml at its working directory root.
+# Updated by scripts/init_case.py and scripts/advance_phase.py
+
+$schema: "praxis/manifest/v1"
+
+# Immutable identifiers
+case_id:
+  type: string
+  pattern: "^praxis-\\d{8}-[a-f0-9]{8}$"
+  description: "Auto-generated. Format: praxis-YYYYMMDD-xxxxxxxx"
+  example: "praxis-20260418-a1b2c3d4"
+
+consultant_id:
+  type: string
+  pattern: "^[a-z][a-z0-9-]+$"
+  description: "Kebab-case consultant identifier"
+  example: "joao-silva"
+
+# Client identity block
+client_identity:
+  company_name:
+    type: string
+    required: true
+  segment:
+    type: string
+    required: false
+  team_size:
+    type: string
+    required: false
+  annual_revenue_range:
+    type: string
+    required: false
+  decision_makers:
+    type: list
+    required: false
+  branding:
+    logo_path: string|null
+    primary_color: string|null     # hex, e.g. "#1B2A4A"
+    accent_color: string|null
+    consultant_display_name: string
+    consultant_company: string
+    font_family: string
+  drive_references:
+    type: list
+    description: "Google Drive document IDs linked to this case"
+    items: string
+
+# Pipeline state
+current_phase:
+  type: integer
+  enum: [1, 2, 3, 4, 5, 6]
+  description: "Active phase number. Updated after gate passes."
+
+scenario_selected:
+  type: string
+  enum: ["A", "B", "C", null]
+  description: "Set at end of Phase 1 via G-I1"
+
+phase_history:
+  type: list
+  items:
+    phase: integer
+    completed_at: string  # ISO 8601
+    gate_passed: string
+
+# Artifacts registry
+artifacts_produced:
+  type: list
+  items:
+    artifact_id: string   # e.g. "A-01", "A-MASTER"
+    name: string
+    path: string
+    produced_at: string   # ISO 8601
+    phase: integer
+    sha256: string|null   # file hash for integrity
+    trilha: string        # "INTERNA" | "CLIENTE" | "AMBAS"
+
+# Gate tracking
+gates_passed:
+  type: list
+  items:
+    gate: string          # G0–G6
+    approved_by: string   # consultant_id or "AUTO"
+    timestamp: string     # ISO 8601
+    notes: string|null
+
+gates_pending:
+  type: list
+  items: string           # gate IDs remaining
+
+hardcoded_human_gates:
+  type: list
+  const: ["G2", "G5", "G6"]
+  description: "NEVER auto-advance. Require explicit consultant approval."
+
+# Session metadata
+created_at: string        # ISO 8601
+updated_at: string        # ISO 8601
+briefing_path: string|null
+case_id_previous: string|null  # for Scenario B (review)
